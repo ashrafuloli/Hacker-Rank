@@ -27,8 +27,8 @@ int main()
 
 for ( i = 0; i < n; i++)
 {
-  int p = 0 ;
-  int q = 0;
+  p = 0 ;
+   q = 0;
   for ( j = i, k = i; j<n || k >= 0; j++,k--)
   {
       // For right side
@@ -72,15 +72,15 @@ int max2=left[0];
 for ( i = 0; i < n; i++)
 {
     if (right[i]>max1)
-    {
+   
        max1=right[i];
-    }
+  
 
     if (left[i]>max2)
-    {
+  
        max2=left[i];
-    }
     
+}  
     
 
 
@@ -93,7 +93,7 @@ for ( i = 0; i < n; i++)
    printf("%ld",max2);
  }
 
-}
+
  
 //  main function end
 }   
