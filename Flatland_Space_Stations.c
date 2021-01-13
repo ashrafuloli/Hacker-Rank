@@ -1,113 +1,105 @@
-#include <assert.h>
-#include <limits.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-char* readline();
-char** split_string(char*);
-
-// Complete the flatlandSpaceStations function below.
-int flatlandSpaceStations(int n, int c_count, int* c) {
-
-
-}
-
+#include<stdio.h>
 int main()
 {
-    FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
 
-    char** nm = split_string(readline());
+   long int n,m,x,i,j,k,p=0,q=0;
+    scanf("%ld %ld",&n,&m);
 
-    char* n_endptr;
-    char* n_str = nm[0];
-    int n = strtol(n_str, &n_endptr, 10);
+   long  c[n], right [n],left [n];
+   for ( i = 0; i < n; i++)
+   {
+       c [i]= -1;
+       right [i] =0;
+       left [i]=0;
 
-    if (n_endptr == n_str || *n_endptr != '\0') { exit(EXIT_FAILURE); }
+   }
 
-    char* m_endptr;
-    char* m_str = nm[1];
-    int m = strtol(m_str, &m_endptr, 10);
+  
 
-    if (m_endptr == m_str || *m_endptr != '\0') { exit(EXIT_FAILURE); }
+   for ( i = 0; i < n; i++)
+   {
+    
+      scanf("%ld",&x);
+      c[x]=x;
+   }
+   
+   //For left and right side's nearest value
 
-    char** c_temp = split_string(readline());
+for ( i = 0; i < n; i++)
+{
+  p = 0 ;
+   q = 0;
+  for ( j = i, k = i; j<n || k >= 0; j++,k--)
+  {
+      // For right side
+     if(j<n)
+     {
+         if (c[j]== -1)
 
-    int* c = malloc(m * sizeof(int));
+        
+             p++;
+         else
+         {
+            right[i]=p;
+            break;
+         }
+        
+     }
 
-    for (int i = 0; i < m; i++) {
-        char* c_item_endptr;
-        char* c_item_str = *(c_temp + i);
-        int c_item = strtol(c_item_str, &c_item_endptr, 10);
-
-        if (c_item_endptr == c_item_str || *c_item_endptr != '\0') { exit(EXIT_FAILURE); }
-
-        *(c + i) = c_item;
-    }
-
-    int c_count = m;
-
-    int result = flatlandSpaceStations(n, c_count, c);
-
-    fprintf(fptr, "%d\n", result);
-
-    fclose(fptr);
-
-    return 0;
+     //For left side
+     if (k>=0)
+     {
+         if (c[k]== -1)
+        
+             q++;
+      else
+         {
+             left[i]=q;
+             break;
+         }
+         
+         
+     }
+     
+ }
 }
 
-char* readline() {
-    size_t alloc_length = 1024;
-    size_t data_length = 0;
-    char* data = malloc(alloc_length);
 
-    while (true) {
-        char* cursor = data + data_length;
-        char* line = fgets(cursor, alloc_length - data_length, stdin);
+//For maximum nearest value
 
-        if (!line) { break; }
+int max1=right[0];
+int max2=left[0];
+for ( i = 0; i < n; i++)
+{
+    if (right[i]>max1)
+   
+       max1=right[i];
+  
 
-        data_length += strlen(cursor);
+    if (left[i]>max2)
+  
+       max2=left[i];
+    
+}  
+    
 
-        if (data_length < alloc_length - 1 || data[data_length - 1] == '\n') { break; }
 
-        size_t new_length = alloc_length << 1;
-        data = realloc(data, new_length);
+    if (max1>max2)
+   {
+    printf("%ld",max1);
+   } 
+   else
+ {
+   printf("%ld",max2);
+ }
 
-        if (!data) { break; }
 
-        alloc_length = new_length;
-    }
+ 
+//  main function end
+}   
 
-    if (data[data_length - 1] == '\n') {
-        data[data_length - 1] = '\0';
-    }
 
-    data = realloc(data, data_length);
 
-    return data;
-}
 
-char** split_string(char* str) {
-    char** splits = NULL;
-    char* token = strtok(str, " ");
 
-    int spaces = 0;
 
-    while (token) {
-        splits = realloc(splits, sizeof(char*) * ++spaces);
-        if (!splits) {
-            return splits;
-        }
-
-        splits[spaces - 1] = token;
-
-        token = strtok(NULL, " ");
-    }
-
-    return splits;
-}
