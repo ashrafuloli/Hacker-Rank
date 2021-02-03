@@ -10,7 +10,7 @@ int main(){
 
         for(j=i+1;j<n;j++){
             if(a[i]==a[j]){
-                k=j-1;
+                k=j-i;
                 if(p==0){
                     min=k;
                     p=1;
